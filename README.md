@@ -1,2 +1,2 @@
 # simple-js-app
-To be updated in next exercise
+A list of Pokemons has been added in the .js file to be referred to later.
