@@ -9,13 +9,23 @@ let pokemonList = [
   {name: 'Misdreavus', height: 0.7, type: 'ghost'}
 ];
 //this makes a list of pokemons
-for (let i=0; i<pokemonList.length; i++) {
-
-  if (pokemonList[i].height >= 2) {
-    document.write(pokemonList[i].name + " (height: " + pokemonList[i].height +")" + " - Wow, a big pokemon!");
-    document.write("<br>");
+pokemonList.forEach(function(pokemon){
+  if (pokemon.height >= 2) {
+    document.write(pokemon.name + " (height: " + pokemon.height +")" + " - Wow, a big pokemon!<br>");
   }else {
-  document.write(pokemonList[i].name + " (height: " + pokemonList[i].height +")");
+  document.write(pokemon.name + " (height: " + pokemon.height +")<br>");
+
+}
+});
+//Previous code using for loop
+/*
+for (let i=0; i<pokemonList.length; i++) {
+if (pokemonList[i].height >= 2) {
+  document.write(pokemonList[i].name + " (height: " + pokemonList[i].height +")" + " - Wow, a big pokemon!");
   document.write("<br>");
+}else {
+document.write(pokemonList[i].name + " (height: " + pokemonList[i].height +")");
+document.write("<br>");
 }
 }
+*/
