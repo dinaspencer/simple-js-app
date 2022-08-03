@@ -16,22 +16,49 @@ function add(pokemon){
   pokemonList.push(pokemon);
 }
 
+function addv(pokemon){
+  typeof(pokemon) == "object" ? add(pokemon) : "";
+}
+
 function getAll(){
   return pokemonList;
 }
 
+//to show details of each pokemon on button click
+function showDetails(pokemon){
+  console.log(pokemon);
+}
+//button event listener function
+function buttonClick(pokemonButton, pokemon){
+  pokemonButton.addEventListener('click', function(){
+    showDetails(pokemon);
+  })
+}
+
+function addListItem(pokemon){
+  let pokemonList = document.querySelector(".pokemon-list");
+  let listItem = document.createElement("li");
+  let button = document.createElement("button");
+  button.innerText = pokemon.name;
+  button.classList.add("pokemon-button");
+  listItem.appendChild(button);
+  pokemonList.appendChild(listItem);
+  buttonClick(button, pokemon);
+}
+
+
+
   return {
     add: add,
-    getAll: getAll
+    getAll: getAll,
+    showDetails: showDetails,
+    addListItem: addListItem
   };
 })();
 
 //changing pokemonList to pokemonRepository.getAll() allows me to access the pokemon array and iterate over each item
-  pokemonRepository.getAll().forEach(function(pokemon){
-  if (pokemon.height >= 2) {
-    document.write(pokemon.name + " (height: " + pokemon.height +")" + " - Wow, a big pokemon!<br>");
-  }else {
-  document.write(pokemon.name + " (height: " + pokemon.height +")<br>");
 
-}
+  pokemonRepository.getAll().forEach(function(pokemon){
+    pokemonRepository.addListItem(pokemon);
+
 });
