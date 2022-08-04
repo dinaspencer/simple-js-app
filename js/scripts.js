@@ -1,16 +1,8 @@
 let pokemonRepository = (function(){
 
 
-let pokemonList = [
-  {name: 'Venusaur', height: 2, type: ['grass', 'poison']},
-  {name: 'Butterfree', height: 1, type: ['bug', 'flying']},
-  {name: 'Sandslash', height: 1.1, type: 'ground'},
-  {name: 'Psyduck', height: 0.8, type: 'water'},
-  {name: 'Slowpoke', height: 1.2, type: ['psychic', 'water']},
-  {name: 'Quilava', height: 0.9, type: 'fire'},
-  {name: 'Breloom', height: 1.2, type: ['grass', 'fighting']},
-  {name: 'Misdreavus', height: 0.7, type: 'ghost'}
-];
+let pokemonList = [];
+let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
 function add(pokemon){
   pokemonList.push(pokemon);
@@ -26,7 +18,9 @@ function getAll(){
 
 //to show details of each pokemon on button click
 function showDetails(pokemon){
+  loadDetails(pokemon).then(function(){
   console.log(pokemon);
+  });
 }
 //button event listener function
 function buttonClick(pokemonButton, pokemon){
@@ -34,7 +28,7 @@ function buttonClick(pokemonButton, pokemon){
     showDetails(pokemon);
   })
 }
-
+//builds the buttons to be clicked for each pokemon
 function addListItem(pokemon){
   let pokemonList = document.querySelector(".pokemon-list");
   let listItem = document.createElement("li");
@@ -45,20 +39,51 @@ function addListItem(pokemon){
   pokemonList.appendChild(listItem);
   buttonClick(button, pokemon);
 }
-
-
+//gets the data from the API and loads onto page
+function loadList(){
+  return fetch(apiUrl).then(function(response){
+    return response.json();
+  }).then(function(json){
+    json.results.forEach(function(item){
+      let pokemon = {
+        name: item.name,
+        detailsUrl: item.url
+      };
+      add(pokemon);
+    });
+  }).catch(function(e){
+    console.error(e);
+  })
+}
+//loads details for each pokemon on button click (showDetails)
+function loadDetails(pokemon){
+  let url = pokemon.detailsUrl;
+  return fetch(url).then(function(response){
+    return response.json();
+  }).then(function(details){
+    pokemon.imageUrl = details.sprites.front_default;
+    pokemon.height = details.height;
+    pokemon.types = details.types;
+  }).catch(function(e){
+    console.error(e);
+  });
+}
 
   return {
     add: add,
     getAll: getAll,
-    showDetails: showDetails,
-    addListItem: addListItem
+    addListItem: addListItem,
+    loadList: loadList,
+    loadDetails: loadDetails
   };
 })();
+
+//loading the list of pokemons from api using promise function
+pokemonRepository.loadList().then(function(){
 
 //changing pokemonList to pokemonRepository.getAll() allows me to access the pokemon array and iterate over each item
 
   pokemonRepository.getAll().forEach(function(pokemon){
     pokemonRepository.addListItem(pokemon);
-
+  });
 });
