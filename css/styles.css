@@ -40,9 +40,6 @@ li {
 
 .pokemon-list {
   box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 20px;
   max-width: 90%;
   margin: 0 auto;
   margin-top: 24px;
@@ -78,20 +75,12 @@ li {
 
 
 @media screen and (max-width: 768px){
-  .pokemon-list {
-    grid-template-columns: 1fr 1fr;
-}
+
   .navbar li {
     padding: 12px;
   }
 
   .d-flex {
     padding-right: 12px;
-}
-}
-
-@media screen and (max-width: 576px){
-  .pokemon-list {
-    grid-template-columns: 1fr;
 }
 }

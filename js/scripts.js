@@ -38,13 +38,13 @@ function buttonClick(pokemonButton, pokemon){
 function addListItem(pokemon){
   let pokemonList = document.querySelector('.pokemon-list');
   let listItem = document.createElement('li');
-  listItem.classList.add('group-list-item');
+  listItem.classList.add('col', 'col-lg-4', 'col-md-6');
   let button = document.createElement('button');
   button.innerText = pokemon.name;
-  button.classList.add('btn-primary');
-  button.classList.add('btn');
+  button.classList.add('btn-primary', 'btn');
+  //button.classList.add('btn');
   button.setAttribute('data-bs-toggle', 'modal');
-  button.setAttribute('data-bs-target', '#exampleModal')
+  button.setAttribute('data-bs-target', '#exampleModal');
   listItem.appendChild(button);
   pokemonList.appendChild(listItem);
   buttonClick(button, pokemon);
